@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LauncherConfiguration
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../xsd/LauncherConfiguration.xsd">
+
+<!-- Change the bios path to wherever you store your bios for each individual system -->
+
+    <Platform LaunchBoxPlatform="Acorn Atom">
+        <Media extension="dsk 40t">
+            <EmulatorConfiguration emulator="MameFloppyAutoboot" autoboot="AtomDisk">
+                <VariableAssignment name="system">atom</VariableAssignment>
+                <VariableAssignment name="biosPath"><![CDATA["Z:\Systems\Acorn\Atom\Mame\Bios"]]></VariableAssignment>
+            </EmulatorConfiguration>  
+        </Media>
+    </Platform>
+
+    <Platform LaunchBoxPlatform="Acorn Electron">
+        <Media extension="ssd">
+            <EmulatorConfiguration emulator="MameAcornDFSAutoboot" autoboot="BBCDisk">
+                <VariableAssignment name="system">electron</VariableAssignment>
+                <!-- Requires electron_ap6 -->
+                <VariableAssignment name="exp1">ap6</VariableAssignment>
+                <!-- Requires seds in electron_cart -->
+                <VariableAssignment name="cart1">seds</VariableAssignment>
+                <VariableAssignment name="biosPath"><![CDATA["Z:\Systems\Acorn\Electron\Mame\Bios"]]></VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+
+        <Media extension="uef">
+            <EmulatorConfiguration emulator="MameAcornTapeAutoboot" autoboot="AcornElectronTape">
+                <VariableAssignment name="system">electron</VariableAssignment>
+                <!-- Requires electron_ap6 -->
+                <VariableAssignment name="exp1">ap6</VariableAssignment>
+                <VariableAssignment name="biosPath"><![CDATA["Z:\Systems\Acorn\Electron\Mame\Bios"]]></VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+    <Platform LaunchBoxPlatform="BBC Microcomputer System">
+        <Media extension="ssd">
+            <EmulatorConfiguration emulator="MameFloppyAutoboot" autoboot="BBCDisk">
+                <VariableAssignment name="system">bbcb</VariableAssignment>
+                <VariableAssignment name="biosPath"><![CDATA["Z:\Systems\Acorn\BBC Micro\Mame\Bios"]]></VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+<!-- 
+    Example with a lua script instead of the autoboot defined in this launcher - see, for example, autoboot_script in https://github.com/Bob-Z/RandoMame 
+-->
+    <Platform LaunchBoxPlatform="Amstrad CPC">
+        <Media extension="dsk">
+            <EmulatorConfiguration emulator="MameLuaAutoboot">
+                <VariableAssignment name="system">cpc664</VariableAssignment>
+                <VariableAssignment name="biosPath"><![CDATA["Z:\Systems\Amstrad\CPC\Mame\Bios"]]></VariableAssignment>
+                <VariableAssignment name="autobootDelay">2</VariableAssignment>
+                <VariableAssignment name="luaScriptPath"><![CDATA["V:\Working\cpc_flop.lua"]]></VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+    <Platform LaunchBoxPlatform="Dragon 32/64">
+        <Media extension="cas">
+            <EmulatorConfiguration emulator="MameTapeAutoboot" autoboot="DragonTape">
+                <VariableAssignment name="system">dragon64</VariableAssignment>
+                <VariableAssignment name="biosPath"><![CDATA["Z:\Systems\Dragon\64\Bios\Mame"]]></VariableAssignment>
+                <VariableAssignment name="autobootDelay">3</VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+</LauncherConfiguration>
