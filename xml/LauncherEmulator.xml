@@ -6,7 +6,7 @@
     <Prototype key="Mame">
         <EmulatorDefinition>
             <LaunchboxEmulator>
-                <Title>MAME 0261</Title>
+                <Title>MAME</Title>
             </LaunchboxEmulator>
             <CommandLine>
                 <ParameterList>
