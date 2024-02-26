@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    
+    <xs:complexType name="CommandSequenceType">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element name="Command" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KnownBootSequenceType">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element name="Command" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="AutobootType">
+        <xs:sequence>
+            <xs:element name="NamedProgramBootSequence" type="CommandSequenceType" minOccurs="0"/>
+            <xs:element name="DefaultBootSequence" type="CommandSequenceType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="key" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="LauncherAutobootType">
+        <xs:sequence>
+            <xs:element name="Autoboot" type="AutobootType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="LauncherAutoboot" type="LauncherAutobootType">
+        <xs:key name="AutobootKey">
+            <xs:selector xpath="Autoboot"/>
+            <xs:field xpath="@key"/>
+        </xs:key>
+    </xs:element>
+
+</xs:schema>

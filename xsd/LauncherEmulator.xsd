@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="DefaultEnum" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="autoboot" />
+            <xs:enumeration value="rompath" />
+            <xs:enumeration value="program" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ParameterType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="Constant" type="xs:string" minOccurs="0"/>
+                <xs:element name="Default" type="DefaultEnum" minOccurs="0"/>
+                <xs:element name="Variable" type="xs:string" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="Switch" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="ParameterListType">
+        <xs:sequence>
+            <xs:element name="Parameter" type="ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CommandLineType">
+        <xs:sequence>
+            <xs:element name="ParameterList" type="ParameterListType" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LaunchboxEmulatorType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="ID"/>
+                <xs:element name="Title"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="BespokeEmulatorType">
+        <xs:sequence>
+            <xs:element name="EmulatorPath" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EmulatorDefinitionType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="LaunchboxEmulator" type="LaunchboxEmulatorType" minOccurs="0"/>
+                <xs:element name="BespokeEmulator" type="BespokeEmulatorType" minOccurs="0"/>
+            </xs:choice>
+            <xs:element name="CommandLine" type="CommandLineType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="PrototypeType">
+        <xs:sequence>
+            <xs:element name="EmulatorDefinition" type="EmulatorDefinitionType"/>
+        </xs:sequence>
+        <xs:attribute name="key" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="PrototypeReferenceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="ref" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="EmulatorType">
+        <xs:sequence>
+            <xs:element name="Prototype" type="PrototypeReferenceType" minOccurs="0"/>
+            <xs:element name="EmulatorDefinition" type="EmulatorDefinitionType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="key" type="xs:string"/>
+        <xs:attribute name="prototype" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="LauncherEmulatorType">
+        <xs:sequence>
+            <xs:element name="Prototype" type="PrototypeType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="Emulator" type="EmulatorType" minOccurs="0" maxOccurs="unbounded">
+                <xs:keyref name="EmulatorPrototype" refer="PrototypeKey">
+                    <xs:selector xpath="Emulator"/>
+                    <xs:field xpath="@prototype"/>
+                </xs:keyref>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="LauncherEmulator" type="LauncherEmulatorType">
+        <xs:key name="PrototypeKey">
+            <xs:selector xpath="Prototype"/>
+            <xs:field xpath="@key"/>
+        </xs:key>
+        <xs:key name="EmulatorKey">
+            <xs:selector xpath="Emulator"/>
+            <xs:field xpath="@key"/>
+        </xs:key>
+    </xs:element>
+
+</xs:schema>

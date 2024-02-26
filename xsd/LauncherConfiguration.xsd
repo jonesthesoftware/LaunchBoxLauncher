@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="FileExtensionList">
+        <xs:list itemType="xs:string"/>
+    </xs:simpleType>
+
+    <xs:complexType name="FileExtensionType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="extension" type="FileExtensionList"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="VariableAssignmentType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="EmulatorConfigurationType">
+        <xs:sequence>
+            <xs:element name="VariableAssignment" type="VariableAssignmentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="emulator" type="xs:string"/>
+        <xs:attribute name="autoboot" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="MediaConfigType">
+        <xs:sequence>
+            <xs:element name="EmulatorConfiguration" type="EmulatorConfigurationType"/>
+        </xs:sequence>
+        <xs:attribute name="extension" type="FileExtensionList"/>
+    </xs:complexType>
+
+    <xs:complexType name="LaunchboxPlatformType">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PlatformType">
+        <xs:sequence>
+            <xs:element name="Media" type="MediaConfigType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="LaunchBoxPlatform" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="LauncherConfigurationType">
+        <xs:sequence>
+            <xs:element name="Platform" type="PlatformType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="LauncherConfiguration" type="LauncherConfigurationType"/>
+
+</xs:schema>
