@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LauncherEmulator
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../xsd/LauncherEmulator.xsd">
+
+    <Prototype key="Mame">
+        <EmulatorDefinition>
+            <LaunchboxEmulator>
+                <Title>MAME 0261</Title>
+            </LaunchboxEmulator>
+            <CommandLine>
+                <ParameterList>
+                    <Parameter>
+                        <Variable>system</Variable>
+                    </Parameter>
+                    <Parameter Switch="-keyboardprovider">
+                        <Constant>dinput</Constant>
+                    </Parameter>
+                    <Parameter Switch="-skip_gameinfo"/>
+                    <Parameter Switch="-nowindow"/>
+                    <Parameter Switch="-video">
+                        <Constant>bgfx</Constant>
+                    </Parameter>
+                    <Parameter Switch="-bgfx_screen_chains">
+                        <Constant>crt-geom</Constant>
+                    </Parameter>
+                </ParameterList>
+            </CommandLine>
+        </EmulatorDefinition>
+    </Prototype>
+
+    <Emulator key="MameFloppyAutoboot" prototype="Mame">
+        <EmulatorDefinition>
+            <CommandLine>
+                <ParameterList>
+                    <Parameter Switch="-flop1">
+                        <Default>rompath</Default>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_command">
+                        <Default>autoboot</Default>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_delay">
+                        <Constant>2</Constant>
+                    </Parameter>
+                </ParameterList>
+            </CommandLine>
+        </EmulatorDefinition>
+    </Emulator>
+
+    <Emulator key="MameAcornDFSAutoboot" prototype="Mame">
+        <EmulatorDefinition>
+            <CommandLine>
+                <ParameterList>
+                    <Parameter Switch="-exp">
+                        <Variable>exp1</Variable>
+                    </Parameter>
+                    <Parameter Switch="-cart1">
+                        <Variable>cart1</Variable>
+                    </Parameter>
+                    <Parameter Switch="-flop">
+                        <Default>rompath</Default>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_command">
+                        <Default>autoboot</Default>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_delay">
+                        <Constant>2</Constant>
+                    </Parameter>
+                </ParameterList>
+            </CommandLine>
+        </EmulatorDefinition>
+    </Emulator>
+
+    <Emulator key="MameAcornTapeAutoboot" prototype="Mame">
+        <EmulatorDefinition>
+            <CommandLine>
+                <ParameterList>
+                    <Parameter Switch="-cass">
+                        <Default>rompath</Default>
+                    </Parameter>
+                    <Parameter Switch="-exp">
+                        <Variable>exp1</Variable>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_command">
+                        <Default>autoboot</Default>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_delay">
+                        <Constant>2</Constant>
+                    </Parameter>
+                </ParameterList>
+            </CommandLine>
+        </EmulatorDefinition>
+    </Emulator>
+
+    <Emulator key="MameTapeAutoboot" prototype="Mame">
+        <EmulatorDefinition>
+            <CommandLine>
+                <ParameterList>
+                    <Parameter Switch="-cass">
+                        <Default>rompath</Default>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_command">
+                        <Default>autoboot</Default>
+                    </Parameter>
+                    <Parameter Switch="-autoboot_delay">
+                        <Variable>autobootDelay</Variable>
+                    </Parameter>
+                </ParameterList>
+            </CommandLine>
+        </EmulatorDefinition>
+    </Emulator>
+
+</LauncherEmulator>

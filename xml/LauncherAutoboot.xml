@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LauncherAutoboot
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../xsd/LauncherAutoboot.xsd">
+    
+    <Autoboot key="AtomDisk">
+        <NamedProgramBootSequence>
+            <Command><![CDATA[*DOS]]></Command>
+            <Command><![CDATA[*RUN """%program%"""]]></Command>
+            <Command/>
+        </NamedProgramBootSequence>
+        <DefaultBootSequence>
+            <Command><![CDATA[*DOS]]></Command>
+            <Command><![CDATA[*CAT]]></Command>
+            <Command/>
+            <Command/>
+            <Command><![CDATA[*RUN "]]></Command>
+        </DefaultBootSequence>
+    </Autoboot>
+
+    <Autoboot key="BBCDisk">
+        <DefaultBootSequence>
+            <Command><![CDATA[*EXEC !BOOT]]></Command>
+            <Command/>
+        </DefaultBootSequence>
+    </Autoboot>
+
+    <Autoboot key="AcornElectronTape">
+        <DefaultBootSequence>
+            <Command><![CDATA[*TAPE]]></Command>
+            <Command><![CDATA[CHAIN """"""]]></Command>
+            <Command/>
+        </DefaultBootSequence>
+    </Autoboot>
+
+    <Autoboot key="AmstradCPCDisk">
+        <NamedProgramBootSequence>
+            <Command><![CDATA[RUN """%program%"""]]></Command>
+            <Command/>
+        </NamedProgramBootSequence>
+        <DefaultBootSequence>
+            <Command><![CDATA[CAT]]></Command>
+            <Command/>
+        </DefaultBootSequence>
+    </Autoboot>
+
+    <Autoboot key="DragonTape">
+        <DefaultBootSequence>
+            <Command><![CDATA[CLOADM:EXEC]]></Command>
+            <Command/>
+        </DefaultBootSequence>
+    </Autoboot>
+
+</LauncherAutoboot>

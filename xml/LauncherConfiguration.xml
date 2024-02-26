@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LauncherConfiguration
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../xsd/LauncherConfiguration.xsd">
+
+    <Platform LaunchBoxPlatform="Acorn Atom">
+        <Media extension="dsk 40t">
+            <EmulatorConfiguration emulator="MameFloppyAutoboot" autoboot="AtomDisk">
+                <VariableAssignment name="system">atom</VariableAssignment>
+            </EmulatorConfiguration>  
+        </Media>
+    </Platform>
+
+    <Platform LaunchBoxPlatform="Acorn Electron">
+        <Media extension="ssd">
+            <EmulatorConfiguration emulator="MameAcornDFSAutoboot" autoboot="BBCDisk">
+                <VariableAssignment name="system">electron</VariableAssignment>
+                <!-- Requires electron_ap6 -->
+                <VariableAssignment name="exp1">ap6</VariableAssignment>
+                <!-- Requires seds in electron_cart -->
+                <VariableAssignment name="cart1">seds</VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+
+        <Media extension="uef">
+            <EmulatorConfiguration emulator="MameAcornTapeAutoboot" autoboot="AcornElectronTape">
+                <VariableAssignment name="system">electron</VariableAssignment>
+                <!-- Requires electron_ap6 -->
+                <VariableAssignment name="exp1">ap6</VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+    <Platform LaunchBoxPlatform="BBC Microcomputer System">
+        <Media extension="ssd">
+            <EmulatorConfiguration emulator="MameFloppyAutoboot" autoboot="BBCDisk">
+                <VariableAssignment name="system">bbcb</VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+    <Platform LaunchBoxPlatform="Amstrad CPC">
+        <Media extension="dsk">
+            <EmulatorConfiguration emulator="MameFloppyAutoboot" autoboot="AmstradCPCDisk">
+                <VariableAssignment name="system">cpc664</VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+    <Platform LaunchBoxPlatform="Dragon 32/64">
+        <Media extension="cas">
+            <EmulatorConfiguration emulator="MameTapeAutoboot" autoboot="DragonTape">
+                <VariableAssignment name="system">dragon64</VariableAssignment>
+                <VariableAssignment name="autobootDelay">3</VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
+    </Platform>
+
+</LauncherConfiguration>
