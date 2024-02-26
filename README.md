@@ -16,7 +16,7 @@ Just copy the whole thing to your system, wherever you like, and then set it up 
 
 For example, if you decide to copy it into the Emulators directory in launchbox, you'd define the application path as 
 
-<pre>.\Emulators\LaunchBoxLauncher-MyConfig\launcher.bat</pre>
+<pre>.\Emulators\LaunchBoxLauncher\launcher.bat</pre>
 
 The Default command line parameters should be set to
 
