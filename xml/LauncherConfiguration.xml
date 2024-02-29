@@ -45,6 +45,12 @@
                 <VariableAssignment name="system">cpc664</VariableAssignment>
             </EmulatorConfiguration>
         </Media>
+        <Media extension="cdt">
+            <EmulatorConfiguration emulator="MameTapeAutoboot" autoboot="AmstradCPCTape">
+                <VariableAssignment name="system">cpc664</VariableAssignment>
+                <VariableAssignment name="autobootDelay">2</VariableAssignment>
+            </EmulatorConfiguration>
+        </Media>
     </Platform>
 
     <Platform LaunchBoxPlatform="Dragon 32/64">

@@ -18,6 +18,7 @@
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="Switch" type="xs:string"/>
+        <xs:attribute name="MameAutoboot" type="xs:boolean" default="false"/>
     </xs:complexType>
 
     <xs:complexType name="ParameterListType">

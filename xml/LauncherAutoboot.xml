@@ -44,6 +44,10 @@
         </DefaultBootSequence>
     </Autoboot>
 
+    <Autoboot key="AmstradCPCTape">
+        <DefaultLuaScriptPath><![CDATA[cpc_cass.lua]]></DefaultLuaScriptPath>
+    </Autoboot>
+
     <Autoboot key="DragonTape">
         <DefaultBootSequence>
             <Command><![CDATA[CLOADM:EXEC]]></Command>

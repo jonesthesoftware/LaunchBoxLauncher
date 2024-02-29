@@ -8,7 +8,8 @@ Function Get-Autoboot
     param(
         [string]$XmlPath,
         [string]$Key,
-        [PsCustomObject]$Program
+        [PsCustomObject]$Program,
+        [string]$LuaScriptPath
     )
 
     Request-XmlContent -Path $XmlPath
@@ -18,15 +19,30 @@ Function Get-Autoboot
         $CommandNodeList = $AutobootNodeXml.SelectNodes( "DefaultBootSequence/Command" )
     } else {
         $CommandNodeList = $AutobootNodeXml.SelectNodes( "NamedProgramBootSequence/Command" )
-        if ( $null -eq $CommandNodeList ) {
+        if ( $CommandNodeList.Count -eq 0 ) {
             $CommandNodeList = $AutobootNodeXml.SelectNodes( "DefaultBootSequence/Command" )    
         }
     }
 
-    $Command = $($CommandNodeList.InnerText) -Join "\n"
-    $AutobootScript = $Command -replace '%program%', $Program.Name
+    if ( $CommandNodeList.Count -eq 0 ) {
+        # No named program, or default boot sequence, must be using a lua script
+        $IsAutobootPath = $true
+        $Path = $AutobootNodeXml.SelectSingleNode( "DefaultLuaScriptPath" ).InnerText
+        $IsAbsolutePath = Split-Path -Path $Path -IsAbsolute
+        if ( $IsAbsolutePath -eq $false ) {
+            $ConcatenatedPath = $LuaScriptPath + "\" + $Path
+            $AutobootScript = Resolve-Path -Path $ConcatenatedPath
+        } else {
+            $AutobootScript = $Path
+        }    
+    } else {
+        $Command = $($CommandNodeList.InnerText) -Join "\n"
+        $IsAutobootPath = $false
+        $AutobootScript = $Command -replace '%program%', $Program.Name
+    }
 
     return [PSCustomObject]@{
+        IsPath = $IsAutobootPath
         Script = $AutobootScript
     }
 }

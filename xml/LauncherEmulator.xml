@@ -36,9 +36,7 @@
                     <Parameter Switch="-flop1">
                         <Default>rompath</Default>
                     </Parameter>
-                    <Parameter Switch="-autoboot_command">
-                        <Default>autoboot</Default>
-                    </Parameter>
+                    <Parameter MameAutoboot="true"/>
                     <Parameter Switch="-autoboot_delay">
                         <Constant>2</Constant>
                     </Parameter>
@@ -60,9 +58,7 @@
                     <Parameter Switch="-flop">
                         <Default>rompath</Default>
                     </Parameter>
-                    <Parameter Switch="-autoboot_command">
-                        <Default>autoboot</Default>
-                    </Parameter>
+                    <Parameter MameAutoboot="true"/>
                     <Parameter Switch="-autoboot_delay">
                         <Constant>2</Constant>
                     </Parameter>
@@ -81,9 +77,7 @@
                     <Parameter Switch="-exp">
                         <Variable>exp1</Variable>
                     </Parameter>
-                    <Parameter Switch="-autoboot_command">
-                        <Default>autoboot</Default>
-                    </Parameter>
+                    <Parameter MameAutoboot="true"/>
                     <Parameter Switch="-autoboot_delay">
                         <Constant>2</Constant>
                     </Parameter>
@@ -99,9 +93,7 @@
                     <Parameter Switch="-cass">
                         <Default>rompath</Default>
                     </Parameter>
-                    <Parameter Switch="-autoboot_command">
-                        <Default>autoboot</Default>
-                    </Parameter>
+                    <Parameter MameAutoboot="true"/>
                     <Parameter Switch="-autoboot_delay">
                         <Variable>autobootDelay</Variable>
                     </Parameter>

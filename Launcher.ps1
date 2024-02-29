@@ -27,7 +27,7 @@ $EmulatorConfiguration = Get-EmulatorConfiguration -XmlPath $LauncherConfig.Conf
 # Generate the Autoboot Script - this may use the Custom Field "program", from Launchbox, if it is defined
 if ( $null -ne $EmulatorConfiguration.AutobootKey ) {
     $Program = Get-Program -PlatformName $PlatformName -GameId $GameId
-    $Autoboot = Get-Autoboot -XmlPath $LauncherConfig.AutobootXML -Key $EmulatorConfiguration.AutobootKey -Program $Program
+    $Autoboot = Get-Autoboot -XmlPath $LauncherConfig.AutobootXML -Key $EmulatorConfiguration.AutobootKey -Program $Program -LuaScriptPath $LauncherConfig.LuaAutobootScripts
 }
 
 $EmulatorDefinition = Get-EmulatorDefinition -XmlPath $LauncherConfig.EmulatorXML -Key $EmulatorConfiguration.EmulatorKey

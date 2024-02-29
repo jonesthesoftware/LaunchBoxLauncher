@@ -92,6 +92,8 @@ function Get-ParametersFromXml {
             The Parameters in the XML are queried, then combined into a List of PSCustomObjects which describe how to construct the
             command line.
             A Parameter may have a switch, this is just added to the list and will be interpreted into the command line at a later stage. 
+            A Parameter may be a MameAutoboot, this should only happen if there are no inner elements, the command line for autobooting 
+            will be determined at a later stage.
             The inner element in the parameter describes the type of parameter, this may be :-
                 Constant:   The value will be used directly as defined
                 Default:    This is a special case, it is reserved for rom specific options (rompath, autoboot, or program), 
@@ -109,13 +111,19 @@ function Get-ParametersFromXml {
                     Type  = 'Switch'
                     Value = $($Node.Switch)
                 } )
-        }
+        } 
         if ( $Node.HasChildNodes ) {
             $ParameterType = $Node.FirstChild
             $ParameterList.Add( [PSCustomObject]@{ 
                     Type  = $($ParameterType.Name)
                     Value = $($ParameterType.InnerText)
                 } )
+        } elseif ( $Node.HasAttribute( 'MameAutoboot') ) {
+            # A MameAutoboot node should have no child nodes
+            $ParameterList.Add( [PSCustomObject]@{ 
+                Type  = 'MameAutoboot'
+                Value = $($Node.MameAutoboot)
+            } )
         }
         
     }

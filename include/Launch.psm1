@@ -8,6 +8,16 @@ function Start-Emulator {
     $ResolvedEmulatorArguments = $EmulatorArguments.EmulatorParameters | 
         Select-Object @{Name="Parameter"; Expression={
             switch ( $_ ) {
+                { $_.Type -eq 'MameAutoboot' } {
+                    Write-Error AUTOBBOT
+                    if ( $_.Value -eq $true ) {
+                        if ( $EmulatorArguments.Autoboot.IsPath -eq $true ) {
+                            "-autoboot_script ""$($EmulatorArguments.Autoboot.Script)"""
+                        } else {
+                            "-autoboot_command ""$($EmulatorArguments.Autoboot.Script)"""
+                        }
+                    }
+                }
                 { $_.Type -eq 'Variable' } {
                     $EmulatorArguments.VariableAssignment[$_.Value]
                 }
@@ -33,6 +43,7 @@ function Start-Emulator {
     $EmulatorDirectory = Split-Path -Parent $($EmulatorArguments.EmulatorPath)
     Push-Location -Path $EmulatorDirectory
     $ArgumentList = $ResolvedEmulatorArguments.Parameter -Join " "
+
     Start-Process -FilePath $($EmulatorArguments.EmulatorPath) -ArgumentList $ArgumentList
     Pop-Location
 

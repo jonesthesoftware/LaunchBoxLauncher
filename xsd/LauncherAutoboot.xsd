@@ -18,7 +18,10 @@
     <xs:complexType name="AutobootType">
         <xs:sequence>
             <xs:element name="NamedProgramBootSequence" type="CommandSequenceType" minOccurs="0"/>
-            <xs:element name="DefaultBootSequence" type="CommandSequenceType" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+                <xs:element name="DefaultLuaScriptPath" type="xs:string"/>
+                <xs:element name="DefaultBootSequence" type="CommandSequenceType"/>
+            </xs:choice>
         </xs:sequence>
         <xs:attribute name="key" type="xs:string"/>
     </xs:complexType>

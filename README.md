@@ -5,6 +5,17 @@ The program file to run is defined using a custom field named "program" in Launc
 
 The launcher is currently set up for Mame, but it can run other emulators through the XML configuration.
 
+**Note**
+The included RandoMame Lua Scripts are Licensed under Apache License 2.0, please see LICENSE.txt in the lua\RandoMame directory.
+
+Source code for RandoMame can be obtained from
+https://github.com/Bob-Z/RandoMame
+
+No changes have been made to the scripts.
+
+Thank you to Bob-Z for producing these wonderful scripts, and releasing them under a permissive license.
+
+
 ## Example
 As an example, if you have the Acorn Atom Game Galaxians, you may add to "Custom Fields" in Launchbox a field named "program" with the value "GALAXI".
 In the default configuration when the file is launched through launcher.bat it will execute, using the Mame Autoboot command line switch.
@@ -33,9 +44,11 @@ Launching of emulators is configured using the XML files, which by default are r
 
 <pre>ConfigurationXML = xml/LauncherConfiguration.xml
 AutobootXML = xml/LauncherAutoboot.xml
-EmulatorXML = xml/LauncherEmulator.xml</pre>
+EmulatorXML = xml/LauncherEmulator.xml
+LuaAutobootScripts = lua/RandoMame/autoboot</pre>
 
 Each line relates to the location of the relevant XML file, if you want to store these configuration files somewhere else or easily swap between configurations then you can change each file independently.
+The LuaAutobootScripts refers to the default location for lua scripts used in the Autoboot Configuration.
 
 ### XML Configuration
 The LaunchBoxLauncher is primarily configured using 3 XML files, these define how an emulator should be launched, allowing re-use of autoboot scripts and emulator configuration where possible.
@@ -133,14 +146,27 @@ The actual emulator definition will use a reusable protoype, so will inherit any
     </Emulator>
 ```
 
+If you are using Mame as your emulator you may simplify the Parameter autoboot_command, which will also automatically swap between autoboot_command and autoboot_script switches.
+
+instead of this :-
+```xml
+                    <Parameter Switch="-autoboot_command">
+                        <Default>autoboot</Default>
+                    </Parameter>
+```
+you may use this instead :-
+```xml
+                    <Parameter MameAutoboot="true"/>
+```
+
+
+
 The Parameters are defined in exactly the same way as the prototype, but are generally more specific to the type of emulation taking place. 
 
 The prototype will usually define something very generic, for example running Mame with CRT emulation on an undefined system. The emulator will generally define more specific information, like how the devices work for a single emulated platform or type of device.
 
 #### Autoboot Configuration
 The LauncherAutoboot.xml file defines how to run a program within the emulator.
-
-Note, if you're using lua scripts, then see the Alternative Setup in xml\examples\AlternativeSetup - you may use a combination of both if you wish.
 
 ```xml    
     <Autoboot key="AtomDisk">
@@ -158,6 +184,18 @@ Note, if you're using lua scripts, then see the Alternative Setup in xml\example
         </DefaultBootSequence>
     </Autoboot>
 ```
+
+Lua Scripts work better for tape loaders, the included RandoMame scripts speed up mame whilst loading so you don't have to hold down insert / skip frames / increase emulation speed manually.
+
+I've also added an alternative option for lua scripts, it will use the path specified in the configuration path, for example :-
+
+```xml    
+    <Autoboot key="AmstradCPCTape">
+        <DefaultLuaScriptPath><![CDATA[cpc_cass.lua]]></DefaultLuaScriptPath>
+    </Autoboot>
+```
+You may also use an absolute path, if you have lua scripts stored in multiple locations, which will override the lua script path defined.
+
 
 Each Command is run in sequence, a blank Command will provide a carriage return in the emulator. If the last command is not a blank command then the emulator will wait for you to type something, this can be useful if you want to catalog a disk & wait to type in the program you want to run without having to remember the run command for that particular system.
 
