@@ -78,8 +78,14 @@ function Get-EmulatorParameters {
     )     
     $PrototypeParameters = Get-ParametersFromXml -Xml $PrototypeXml
     $EmulatorParameters = Get-ParametersFromXml -Xml $EmulatorXml
-    $AllEmulatorParameters = $PrototypeParameters + $EmulatorParameters
-    return $AllEmulatorParameters
+    if ( $null -eq $PrototypeParameters ) {
+        return $EmulatorParameters
+    } elseif ( $null -eq $EmulatorParameters ) {
+        return $PrototypeParameters
+    } else {        
+        $AllEmulatorParameters = $PrototypeParameters + $EmulatorParameters
+        return $AllEmulatorParameters
+    }
 
 }
 

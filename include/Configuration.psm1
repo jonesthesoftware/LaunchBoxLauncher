@@ -23,7 +23,9 @@ function Get-EmulatorConfiguration {
 
     # Create a Hash Table of the Variable Assignments available in this configuration
     $VariableAssignment = @{}
-    $EmulatorConfigurationXml.VariableAssignment | ForEach-Object { $VariableAssignment[$_.name] = $_.InnerText }
+    if ( $null -ne $EmulatorConfigurationXml.VariableAssignment ) {
+        $EmulatorConfigurationXml.VariableAssignment | ForEach-Object { $VariableAssignment[$_.name] = $_.InnerText }
+    }
 
     return [PsCustomObject]@{
         EmulatorKey = $EmulatorConfigurationXml.emulator
