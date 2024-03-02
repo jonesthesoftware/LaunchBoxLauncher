@@ -20,8 +20,19 @@ function Get-MediaXml {
     param (
         [string]$PlatformName,
         [string]$RomExtension
-    )    
-    Get-PlatformXml $PlatformName | Select-Object -ExpandProperty Media | Where-Object -FilterScript { $RomExtension -in $_.extension.Split() }
+    ) 
+    $PlatformNode = Get-PlatformXml $PlatformName 
+    $MediaNodes = $PlatformNode.SelectNodes("Media")
+    if ( $MediaNodes.Count -eq 1 )  {
+        if ( $null -eq $PlatformNode.Media.extension ) {
+            # No extension specified in configuration, use directly
+            $MediaNodes
+        } else {
+            $MediaNodes | Where-Object -FilterScript { $RomExtension -in $_.extension.Split() }
+        }
+    } else { 
+        $MediaNodes | Where-Object -FilterScript { $RomExtension -in $_.extension.Split() }
+    }
 }
 
 function Get-EmulatorConfigurationXml {
