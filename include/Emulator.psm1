@@ -78,9 +78,9 @@ function Get-EmulatorParameters {
     )     
     $PrototypeParameters = Get-ParametersFromXml -Xml $PrototypeXml
     $EmulatorParameters = Get-ParametersFromXml -Xml $EmulatorXml
-    if ( $null -eq $PrototypeParameters ) {
+    if ( $PrototypeParameters.Count -eq 0 ) {
         return $EmulatorParameters
-    } elseif ( $null -eq $EmulatorParameters ) {
+    } elseif ( $EmulatorParameters.Count -eq 0 ) {
         return $PrototypeParameters
     } else {        
         $AllEmulatorParameters = $PrototypeParameters + $EmulatorParameters
@@ -134,7 +134,7 @@ function Get-ParametersFromXml {
         
     }
 
-    return $ParameterList
+    return ,$ParameterList
 
 }
 
