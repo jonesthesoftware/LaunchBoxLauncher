@@ -19,6 +19,8 @@
         </xs:sequence>
         <xs:attribute name="Switch" type="xs:string"/>
         <xs:attribute name="MameAutoboot" type="xs:boolean" default="false"/>
+        <!-- I did consider placing the switch separator at the higher level, but some emulators seem to use different separators for different options -->
+        <xs:attribute name="SwitchSeparator" type="xs:string" default=" "/>
     </xs:complexType>
 
     <xs:complexType name="ParameterListType">

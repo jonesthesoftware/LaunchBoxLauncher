@@ -112,25 +112,34 @@ function Get-ParametersFromXml {
     [System.Collections.Generic.List[PSCustomObject]]$ParameterList = @()
     $NodeList = $Xml.SelectNodes( "EmulatorDefinition/CommandLine/ParameterList/Parameter" )
     foreach ($Node in $NodeList) {
+        $Switch = $null
+        $SwitchSeparator = $null
+        $Type = $null
+        $Value = $null
         if ( $Node.HasAttribute( 'Switch' ) ) {
-            $ParameterList.Add( [PSCustomObject]@{ 
-                    Type  = 'Switch'
-                    Value = $($Node.Switch)
-                } )
+            $Switch = $Node.Switch
+            if ( $Node.HasAttribute( 'SwitchSeparator' ) ) {
+                $SwitchSeparator = $Node.SwitchSeparator
+            }
         } 
         if ( $Node.HasChildNodes ) {
             $ParameterType = $Node.FirstChild
-            $ParameterList.Add( [PSCustomObject]@{ 
-                    Type  = $($ParameterType.Name)
-                    Value = $($ParameterType.InnerText)
-                } )
+            $Type = $ParameterType.Name
+            $Value = $ParameterType.InnerText
+            if ( $null -ne $Switch -and $null -eq $SwitchSeparator ) {
+                $SwitchSeparator = " "
+            }
         } elseif ( $Node.HasAttribute( 'MameAutoboot') ) {
             # A MameAutoboot node should have no child nodes
-            $ParameterList.Add( [PSCustomObject]@{ 
-                Type  = 'MameAutoboot'
-                Value = $($Node.MameAutoboot)
-            } )
-        }
+            $Type = 'MameAutoboot'
+            $Value = $Node.MameAutoboot
+        } 
+        $ParameterList.Add( [PSCustomObject]@{ 
+            Type            = $Type
+            Switch          = $Switch
+            SwitchSeparator = $SwitchSeparator
+            Value           = $Value
+        } )
         
     }
 

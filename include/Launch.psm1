@@ -6,39 +6,7 @@ function Start-Emulator {
         [hashtable]$EmulatorArguments
     )    
     $ResolvedEmulatorArguments = $EmulatorArguments.EmulatorParameters | 
-        Select-Object @{Name="Parameter"; Expression={
-            switch ( $_ ) {
-                { $_.Type -eq 'MameAutoboot' } {
-                    Write-Error AUTOBBOT
-                    if ( $_.Value -eq $true ) {
-                        if ( $EmulatorArguments.Autoboot.IsPath -eq $true ) {
-                            "-autoboot_script ""$($EmulatorArguments.Autoboot.Script)"""
-                        } else {
-                            "-autoboot_command ""$($EmulatorArguments.Autoboot.Script)"""
-                        }
-                    }
-                }
-                { $_.Type -eq 'Variable' } {
-                    $EmulatorArguments.VariableAssignment[$_.Value]
-                }
-                { $_.Type -eq 'Default' } {
-                    switch ( $_.Value ) {
-                        'autoboot' {
-                            """$($EmulatorArguments.Autoboot.Script)"""
-                        }
-                        'rompath' {
-                            """$($EmulatorArguments.RomPath)"""
-                        }
-                        'program' {
-                            """$($EmulatorArguments.Program)"""
-                        }
-                    }
-                }
-                default {
-                    $_.Value
-                }
-            }
-        } }
+        Select-Object @{Name="Parameter"; Expression={ Get-ResolvedParameter -Parameter $_ -EmulatorArguments $EmulatorArguments } }
 
     $EmulatorDirectory = Split-Path -Parent $($EmulatorArguments.EmulatorPath)
     Push-Location -Path $EmulatorDirectory
@@ -46,6 +14,52 @@ function Start-Emulator {
 
     Start-Process -FilePath $($EmulatorArguments.EmulatorPath) -ArgumentList $ArgumentList
     Pop-Location
+
+}
+
+function Get-ResolvedParameter {
+    param (
+        [PSCustomObject]$Parameter,
+        [hashtable]$EmulatorArguments
+    ) 
+
+    if ( $null -ne $Parameter.Switch ) {
+        $Switch = "$($_.Switch)$($_.SwitchSeparator)"
+    } else {
+        $Switch = ""
+    }
+    $Argument = switch ( $Parameter.Type ) {
+        'MameAutoboot' {
+            if ( $Parameter.Value -eq $true ) {
+                if ( $EmulatorArguments.Autoboot.IsPath -eq $true ) {
+                    "-autoboot_script ""$($EmulatorArguments.Autoboot.Script)"""
+                } else {
+                    "-autoboot_command ""$($EmulatorArguments.Autoboot.Script)"""
+                }
+            }   
+        }
+        'Variable' {
+            $EmulatorArguments.VariableAssignment[$Parameter.Value]
+        }
+        'Default' {
+            switch ( $Parameter.Value ) {
+                'autoboot' {
+                    """$($EmulatorArguments.Autoboot.Script)"""
+                }
+                'rompath' {
+                    """$($EmulatorArguments.RomPath)"""
+                }
+                'program' {
+                    """$($EmulatorArguments.Program)"""
+                }
+            }
+        }
+        default {
+            $Parameter.Value
+        }
+    }
+
+    return "$($Switch)$($Argument)"
 
 }
 
